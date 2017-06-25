@@ -1,6 +1,7 @@
 // Import System requirements
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Toasted from 'vue-toasted'
 
 import { sync } from 'vuex-router-sync'
 import routes from './routes'
@@ -19,7 +20,7 @@ Vue.filter('prettyDate', prettyDate)
 Vue.filter('pluralize', pluralize)
 
 Vue.use(VueRouter)
-
+Vue.use(Toasted)
 // Routing logic
 var router = new VueRouter({
   routes: routes,

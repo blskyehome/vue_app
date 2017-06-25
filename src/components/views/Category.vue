@@ -22,27 +22,16 @@
         </div>
         <div v-else>
           <div   v-if="response">
-            <div class="col-md-3 col-sm-6 col-xs-12"  v-for="(item,index) in response">
-              <div class="info-box">
-                  <a class="info-box-icon bg-aqua" v-bind:href="item.url" target="_blank">
-                  <img class="img-circle" v-bind:src="item.icon" alt="icon" onerror="this.src='/static/img/favicon.ico'"/>
-                </a>
-                <div class="info-box-content">
-                  <span class="info-box-text">{{item.title }}</span>
-                  <span class="info-box-number"><small>{{item.clicks}}</small> <small>{{item.category.name}} </small></span>
-                  <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-lg btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{color}} ···
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><button class="btn  btn-link "  @click="forModify(item)"  data-toggle="modal" data-target="#modifyModel"><span class="fa fa-edit"></span>修改</button></li>
-                      <li><button class="btn  btn-link " @click="confirmDelete(item)" data-toggle="modal" data-target="#confirmModel"><span class="fa fa-trash"></span>删除</button></li>
-                    </ul>
-                  </div>
-                  </div>
-                <!-- /.info-box-content -->
+            <div class="col-md-3 col-sm-6 col-xs-12"  v-for="(item,index) in categoryItem">
+              <div class="box box-success">
+                <div class="box-header with-border">
+                  <i class="fa fa-car fa-2x"></i>
+                  <h3 class="box-title">{{item.name}}</h3>
+                </div>
+                <div class="box-body">
+                  <span>{{item.description}}</span>
+                </div>
               </div>
-              <!-- /.info-box -->
             </div>
             <div class="col-md-12 col-sm-6 col-xs-12">
               <button class="btn  btn-info btn-block" @click="loadMore">loadMore</button>
@@ -131,7 +120,7 @@ import axios from 'axios'
 import config from '../../config'
 
 export default {
-  name: 'Repository',
+  name: 'Category',
   data () {
     return {
       githubUrl: config.serverURI + '/user/link',

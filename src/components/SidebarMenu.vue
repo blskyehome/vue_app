@@ -11,6 +11,42 @@
         <span class="page">Tables</span>
       </router-link>
     </li>
+    <li class="header">链接</li>
+    <li class="pageLink" v-on:click="toggleMenu">
+      <router-link to="/link"><i class="fa fa-link"></i>
+        <span class="page">全部</span>
+        <small class="label pull-right bg-green">AJAX</small>
+      </router-link>
+    </li>
+    <li class="treeview">
+      <a href="#">
+        <i class="fa fa-folder-o"></i>
+        <span>按分类</span>
+        <span class="pull-right-container">
+          <i class="fa fa-angle-left fa-fw pull-right"></i>
+        </span>
+      </a>
+      <ul class="treeview-menu">
+        <li v-if="categoryItem" v-for=" item in categoryItem ">
+          <router-link :to="{path: '/user/category/'+item.id+'/link'}">
+            <i class="fa fa-file-text"></i>{{item.name}}
+          </router-link>
+        </li>
+      </ul>
+    </li>
+
+    <li class="header">分类</li>
+    <li class="pageLink" v-on:click="toggleMenu">
+      <router-link to="/category"><i class="fa fa-hashtag"></i>
+        <span class="page">全部分类</span>
+      </router-link>
+    </li>
+
+    <li class="pageLink" v-on:click="toggleMenu">
+      <router-link to="/link"><i class="fa fa-plus-square"></i>
+        <span class="page">新增分类</span>
+      </router-link>
+    </li>
 
     <li class="header">ME</li>
     <li class="pageLink" v-on:click="toggleMenu">
@@ -69,29 +105,7 @@
         <small class="label pull-right bg-green">AJAX</small>
       </router-link>
     </li>
-    <li class="pageLink" v-on:click="toggleMenu">
-      <router-link to="/link"><i class="fa fa-link"></i>
-        <span class="page">Link</span>
-        <small class="label pull-right bg-green">AJAX</small>
-      </router-link>
-    </li>
-    <li class="treeview">
-      <a href="#">
-        <i class="fa fa-folder-o"></i>
-        <span>分类</span>
-        <span class="pull-right-container">
-          <i class="fa fa-angle-left fa-fw pull-right"></i>
-        </span>
-      </a>
-      <ul class="treeview-menu">
 
-        <li v-if="categoryItem" v-for=" item in categoryItem ">
-          <router-link :to="{path: '/user/category/'+item.id+'/link'}">
-            <i class="fa fa-file-word-o"></i>{{item.name}}
-          </router-link>
-        </li>
-      </ul>
-    </li>
 
 
     <li class="header">PAGES</li>

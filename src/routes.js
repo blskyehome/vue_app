@@ -11,6 +11,7 @@ import AccessView from './components/views/Access.vue'
 import ServerView from './components/views/Server.vue'
 import ReposView from './components/views/Repos.vue'
 import LinkView from './components/views/Link.vue'
+import CategoryView from './components/views/Category.vue'
 
 // Routes
 const routes = [
@@ -68,6 +69,11 @@ const routes = [
         component: LinkView,
         name: 'Link',
         meta: {description: 'List of user Link'}
+      }, {
+        path: 'category',
+        component: CategoryView,
+        name: '分类',
+        meta: {description: 'List of user Category'}
       }
     ]
   }, {
