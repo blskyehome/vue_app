@@ -43,7 +43,7 @@
     </li>
 
     <li class="pageLink" v-on:click="toggleMenu">
-      <router-link to="/link"><i class="fa fa-plus-square"></i>
+      <router-link to="/category/new"><i class="fa fa-plus-square"></i>
         <span class="page">新增分类</span>
       </router-link>
     </li>

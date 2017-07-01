@@ -4,19 +4,6 @@
     <!--<h4 class="text-center">User Link</h4>-->
     <section class="content">
       <div class="row">
-        <!-- search form (Optional) -->
-
-        <div class="col-md-6 col-sm-8 col-xs-12">
-          <div class="input-group search-link">
-            <input class="form-control input-sm" v-model="keyword" type="text">
-            <span class="input-group-addon"><i class="fa  fa-search"></i></span>
-          </div>
-        </div>
-        <hr>
-
-        <!-- /.search form -->
-      </div>
-      <div class="row">
         <div v-if="error">
           Found an error
         </div>
@@ -27,9 +14,18 @@
                 <div class="box-header with-border">
                   <i class="fa fa-car fa-2x"></i>
                   <h3 class="box-title">{{item.name}}</h3>
+                    <div class="btn-group pull-right">
+                      <button type="button" class="btn btn-link dropdown-toggle btn-no-padding" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-angle-down "></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><button class="btn  btn-link "  @click="forModify(item)"  data-toggle="modal" data-target="#modifyModel"><span class="fa fa-edit"></span>修改</button></li>
+                        <li><button class="btn  btn-link " @click="confirmDelete(item)" data-toggle="modal" data-target="#confirmModel"><span class="fa fa-trash"></span>删除</button></li>
+                      </ul>
+                    </div>
                 </div>
                 <div class="box-body">
-                  <span>{{item.description}}</span>
+                  <span class="category-description">{{item.description?item.description:'没有描述'}}</span>
                 </div>
               </div>
             </div>
@@ -49,14 +45,14 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="myModalLabel">确定要删除吗？</h4>
             </div>
-            <div class="model-body" v-if="linkForDelete">
+            <div class="model-body" v-if="categoryForDelete">
               <div class="modal-body">
-                <p >标题：{{linkForDelete.title}}</p>
+                <p >分类名：{{categoryForDelete.name}}</p>
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-info" data-dismiss="modal">取消</button>
-              <button type="button" class="btn btn-danger "  data-dismiss="modal" @click="deleteLink">确定</button>
+              <button type="button" class="btn btn-danger "  data-dismiss="modal" @click="deleteCategory">确定</button>
             </div>
           </div>
         </div>
@@ -71,42 +67,22 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="modifyModelLabel">修改</h4>
             </div>
-            <div class="model-body" v-if="linkForModify">
+            <div class="model-body" v-if="categoryForModify">
               <div class="modal-body">
                 <div class="form-group">
-                  <label class="control-label">标题:</label>
-                  <input type="text" class="form-control" v-model="linkForModify.title">
+                  <label class="control-label">分类名:</label>
+                  <input type="text" class="form-control" v-model="categoryForModify.name">
                 </div>
-                <div class="form-group">
-                  <label  class="control-label">链接:</label>
-                  <input type="text" class="form-control"  v-model="linkForModify.url">
-                </div>
-                <div class="form-group"  v-if="categoryItem" >
-                  <label  class="control-label">分类:</label>
-                  <select class="form-control" v-model="linkForModify.category_id">
-                    <option  v-for="item in categoryItem" v-bind:value="item.id" v-if="item.id==linkForModify.category_id " selected="selected">{{item.name}}</option>
-                    <option  v-for="item in categoryItem" v-bind:value="item.id" v-if="item.id!=linkForModify.category_id ">{{item.name}}</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label  class="control-label">是否公开:</label>
-                  <label class="radio-inline">
-                    <input type="radio" name="openness" value="1" v-model="linkForModify.openness"> 公开
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="openness"  value="2" v-model="linkForModify.openness"> 私有
-                  </label>
 
-                </div>
                 <div class="form-group">
-                  <label  class="control-label">备注:</label>
-                  <textarea class="form-control" rows="3" v-model="linkForModify.comment"></textarea>
+                  <label  class="control-label">描述:</label>
+                  <textarea class="form-control" rows="3" v-model="categoryForModify.description"></textarea>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-info " data-dismiss="modal">取消</button>
-              <button type="button" class="btn btn-danger "  data-dismiss="modal" @click="modifyLink">确定</button>
+              <button type="button" class="btn btn-danger "  data-dismiss="modal" @click="modifyCategory">确定</button>
             </div>
           </div>
         </div>
@@ -128,8 +104,8 @@ export default {
       error: null,
       color: null,
       page: 2,
-      linkForModify: null,
-      linkForDelete: null,
+      categoryForModify: null,
+      categoryForDelete: null,
       categoryItem: null,
       keyword: ''
     }
@@ -221,23 +197,23 @@ export default {
         })
     },
     confirmDelete: function (item) {
-      this.linkForDelete = item
-      console.log(this.linkForDelete)
+      this.categoryForDelete = item
+      console.log(this.categoryForDelete)
     },
     forModify: function (item) {
-      this.linkForModify = item
+      this.categoryForModify = item
     },
-    deleteLink: function () {
+    deleteCategory: function () {
       axios({
         method: 'delete',
-        url: config.serverURI + '/link/' + this.linkForDelete.id,
+        url: config.serverURI + '/category/' + this.categoryForDelete.id,
         params: {
           token: localStorage.token
         }
       })
         .then(response => {
-          let index = this.response.indexOf(this.linkForDelete)
-          this.response.splice(index, 1)
+          let index = this.categoryItem.indexOf(this.categoryForDelete)
+          this.categoryItem.splice(index, 1)
           this.$toasted.success('删除成功!', {
             theme: 'bubble',
             position: 'top-center',
@@ -251,17 +227,14 @@ export default {
 //          this.error = error.response.statusText
         })
     },
-    modifyLink: function () {
+    modifyCategory: function () {
       axios({
         method: 'put',
-        url: config.serverURI + '/link/' + this.linkForModify.id,
+        url: config.serverURI + '/category/' + this.categoryForModify.id,
         data: {
           token: localStorage.token,
-          openness: 1,
-          category_id: this.linkForModify.category_id,
-          title: this.linkForModify.title,
-          url: this.linkForModify.url,
-          comment: this.linkForModify.comment
+          name: this.categoryForModify.name,
+          description: this.categoryForModify.description
         }
       })
         .then(response => {
@@ -270,12 +243,13 @@ export default {
             position: 'top-center',
             duration: 5000
           })
+
           console.log(response)
         })
         .catch(error => {
           // Request failed.
           console.log('error', error)
-          this.$toasted.error('修改失败!' + error.response.statusText, {
+          this.$toasted.error('修改失败!' + error.response.data.msg, {
             theme: 'bubble',
             position: 'top-center',
             duration: 5000
@@ -304,4 +278,13 @@ export default {
  .search-link input{
    height: 3em;
  }
+  .category-description{
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .btn-no-padding{
+    padding: 0 12px;
+  }
 </style>

@@ -12,6 +12,7 @@ import ServerView from './components/views/Server.vue'
 import ReposView from './components/views/Repos.vue'
 import LinkView from './components/views/Link.vue'
 import CategoryView from './components/views/Category.vue'
+import CategoryNewView from './components/views/CategoryNew.vue'
 
 // Routes
 const routes = [
@@ -74,6 +75,11 @@ const routes = [
         component: CategoryView,
         name: '分类',
         meta: {description: 'List of user Category'}
+      }, {
+        path: 'category/new',
+        component: CategoryNewView,
+        name: '新建分类',
+        meta: {description: 'New Category'}
       }
     ]
   }, {

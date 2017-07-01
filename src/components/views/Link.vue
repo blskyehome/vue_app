@@ -29,10 +29,10 @@
                 </a>
                 <div class="info-box-content">
                   <span class="info-box-text">{{item.title }}</span>
-                  <span class="info-box-number"><small>{{item.clicks}}</small> <small>{{item.category.name}} </small></span>
+                  <span class="info-box-number"><small>{{item.clicks}}</small> <small v-if="item.category">{{item.category.name}} </small> <small v-else="item.category">未分类</small></span>
                   <div class="btn-group pull-right">
                     <button type="button" class="btn btn-lg btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{color}} ···
+                      <i class="fa fa-angle-down "></i>
                     </button>
                     <ul class="dropdown-menu">
                       <li><button class="btn  btn-link "  @click="forModify(item)"  data-toggle="modal" data-target="#modifyModel"><span class="fa fa-edit"></span>修改</button></li>
