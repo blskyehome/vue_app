@@ -66,11 +66,7 @@ export default {
           if (window.localStorage) {
             window.localStorage.setItem('token', token)
           }
-          if (data.redirect) {
-            this.$router.push(data.redirect)
-          } else {
-            this.$router.push('/')
-          }
+          this.$router.replace(this.$route.query.redirect || '/')
         }
       })
       .catch(error => {

@@ -39,7 +39,7 @@ import axios from 'axios'
 import config from '../../config'
 
 export default {
-  name: 'Category New',
+  name: 'CategoryNew',
   data () {
     return {
       githubUrl: config.serverURI + '/user/link',

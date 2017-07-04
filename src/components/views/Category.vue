@@ -8,11 +8,11 @@
           Found an error
         </div>
         <div v-else>
-          <div   v-if="response">
+          <div   v-if="categoryItem">
             <div class="col-md-3 col-sm-6 col-xs-12"  v-for="(item,index) in categoryItem">
               <div class="box box-success">
                 <div class="box-header with-border">
-                  <i class="fa fa-car fa-2x"></i>
+                  <i class="fa fa-fa fa-hashtag fa-2x"></i>
                   <h3 class="box-title">{{item.name}}</h3>
                     <div class="btn-group pull-right">
                       <button type="button" class="btn btn-link dropdown-toggle btn-no-padding" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -100,13 +100,12 @@ export default {
   data () {
     return {
       githubUrl: config.serverURI + '/user/link',
-      response: {},
       error: null,
       color: null,
       page: 2,
       categoryForModify: null,
       categoryForDelete: null,
-      categoryItem: null,
+      categoryItem: {},
       keyword: ''
     }
   },
@@ -116,7 +115,8 @@ export default {
         method: 'get',
         url: config.serverURI + '/user/category',
         params: {
-          token: localStorage.token
+          token: localStorage.token,
+          size: 24
         }
       })
         .then(response => {
@@ -133,50 +133,14 @@ export default {
           this.error = error.response.statusText
         })
     },
-    callGitHub () {
-      let url = config.serverURI + '/user/link'
-      console.log(this.$route.params.category_id)
-      if (this.$route.params.category_id) {
-        url = config.serverURI + '/user/category/' + this.$route.params.category_id + '/link'
-      }
-      axios({
-        method: 'get',
-        url: url,
-        params: {
-          token: localStorage.token,
-          size: 24,
-          category_id: this.$route.params.category_id,
-          keyword: this.keyword
-        }
-      })
-        .then(response => {
-          console.log('GitHub Response:', response)
-          if (response.status !== 200) {
-            this.error = response.statusText
-            return
-          }
-          this.response = response.data.data
-        })
-        .catch(error => {
-            // Request failed.
-          console.log('error', error)
-          this.error = error
-        })
-    },
     loadMore: function () {
-      let url = config.serverURI + '/user/link'
-      console.log(this.$route.params.category_id)
-      if (this.$route.params.category_id) {
-        url = config.serverURI + '/user/category/' + this.$route.params.category_id + '/link'
-      }
       axios({
         method: 'get',
-        url: url,
+        url: config.serverURI + '/user/category',
         params: {
           token: localStorage.token,
           size: 24,
-          page: this.page,
-          category_id: this.$route.params.category_id
+          page: this.page
         }
       })
         .then(response => {
@@ -186,9 +150,9 @@ export default {
             return
           }
 //          this.$set(this, 'response', response.data.data)
-          this.response = this.response.concat(response.data.data)
+          this.categoryItem = this.categoryItem.concat(response.data.data)
           this.page = this.page + 1
-          console.log(this.response)
+          console.log(this.categoryItem)
         })
         .catch(error => {
           // Request failed.
@@ -259,13 +223,7 @@ export default {
     }
   },
   mounted () {
-    this.callGitHub()
     this.getCategoryItem()
-  },
-  watch: {
-//    当route有变化是重新请求
-    '$route': 'callGitHub',
-    'keyword': 'callGitHub'
   }
 }
 </script>

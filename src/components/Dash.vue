@@ -219,12 +219,15 @@
         })
           .then(response => {
             console.log('Response:', response)
-            this.user = response.data
+            this.user = response.data.user
             console.log(this.user.avatar_image)
+            if (this.user.avatar_image === null) {
+              this.user.avatar_image = {url: config.baseURI + '/avatar/f72af3a670d5d56ead98684b409b941f.jpeg'}
+            }
           })
           .catch(error => {
             // Request failed.
-            console.log('error', error.response)
+            console.log('error', error)
             this.error = error.response.statusText
           })
       }

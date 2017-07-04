@@ -13,7 +13,22 @@ import ReposView from './components/views/Repos.vue'
 import LinkView from './components/views/Link.vue'
 import CategoryView from './components/views/Category.vue'
 import CategoryNewView from './components/views/CategoryNew.vue'
+import Signout from './components/Signout.vue'
+import UserAvatar from './components/views/UserAvatar.vue'
+import UserInfo from './components/views/UserInfo.vue'
 
+//  判断是否登录
+function requireAuth (to, from, next) {
+  console.log('via feathers method: ' + localStorage.getItem('token'))
+  if (localStorage.getItem('token') === null) {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
+}
 // Routes
 const routes = [
   {
@@ -23,12 +38,13 @@ const routes = [
   {
     path: '/',
     component: DashView,
+    beforeEnter: requireAuth,
     children: [
       {
         path: 'dashboard',
         alias: '',
         component: DashboardView,
-        name: 'Dashboard',
+        name: '仪表盘',
         meta: {description: 'Overview of environment'}
       }, {
         path: 'tables',
@@ -80,6 +96,21 @@ const routes = [
         component: CategoryNewView,
         name: '新建分类',
         meta: {description: 'New Category'}
+      }, {
+        path: 'signout',
+        component: Signout,
+        name: '退出',
+        meta: {description: 'New Category'}
+      }, {
+        path: 'user/avatar',
+        component: UserAvatar,
+        name: '设置头像',
+        meta: {description: 'User Avatar'}
+      }, {
+        path: 'user/info',
+        component: UserInfo,
+        name: '设置用户信息',
+        meta: {description: 'User Info'}
       }
     ]
   }, {

@@ -32,7 +32,6 @@ var router = new VueRouter({
 
 // Some middleware to help us ensure the user is authenticated.
 router.beforeEach((to, from, next) => {
-  // window.console.log('Transition', transition)
   if (to.auth && (to.router.app.$store.state.token === 'null')) {
     window.console.log('Not authenticated')
     next({
