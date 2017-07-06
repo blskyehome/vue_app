@@ -16,6 +16,7 @@ import CategoryNewView from './components/views/CategoryNew.vue'
 import Signout from './components/Signout.vue'
 import UserAvatar from './components/views/UserAvatar.vue'
 import UserInfo from './components/views/UserInfo.vue'
+import RegisterView from './components/Register.vue'
 
 //  判断是否登录
 function requireAuth (to, from, next) {
@@ -34,6 +35,10 @@ const routes = [
   {
     path: '/login',
     component: LoginView
+  },
+  {
+    path: '/register',
+    component: RegisterView
   },
   {
     path: '/',

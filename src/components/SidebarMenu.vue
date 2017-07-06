@@ -3,7 +3,7 @@
     <li class="header">总览</li>
     <li class="active pageLink" v-on:click="toggleMenu">
       <router-link to="/"><i class="fa fa-desktop"></i>
-        <span class="page">仪表板</span>
+        <span class="page">仪表盘</span>
       </router-link>
     </li>
   <!--  <li class="pageLink" v-on:click="toggleMenu">
@@ -50,30 +50,24 @@
 
     <li class="header">ME</li>
     <li class="pageLink" v-on:click="toggleMenu">
-      <router-link to="/user/avatar">
-        <i class="fa fa-tasks"></i>
-        <span class="page">头像</span>
-      </router-link>
-    </li>
-    <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/user/info">
         <i class="fa fa-user"></i>
         <span class="page">个人信息</span>
       </router-link>
     </li>
-    <li class="pageLink" v-on:click="toggleMenu">
-      <router-link to="/tasks">
-        <i class="fa fa-tasks"></i>
-        <span class="page">Tasks</span>
-      </router-link>
-    </li>
-    <li class="pageLink" v-on:click="toggleMenu">
-      <router-link to="/setting">
-        <i class="fa fa-cog"></i>
-        <span class="page">Settings</span>
-      </router-link>
-    </li>
-    <li class="treeview">
+    <!--<li class="pageLink" v-on:click="toggleMenu">-->
+      <!--<router-link to="/tasks">-->
+        <!--<i class="fa fa-tasks"></i>-->
+        <!--<span class="page">Tasks</span>-->
+      <!--</router-link>-->
+    <!--</li>-->
+    <!--<li class="pageLink" v-on:click="toggleMenu">-->
+      <!--<router-link to="/setting">-->
+        <!--<i class="fa fa-cog"></i>-->
+        <!--<span class="page">Settings</span>-->
+      <!--</router-link>-->
+    <!--</li>-->
+    <!--<li class="treeview">
       <a href="#">
         <i class="fa fa-folder-o"></i>
         <span>Files</span>
@@ -98,9 +92,9 @@
           </a>
         </li>
       </ul>
-    </li>
+    </li>-->
 
-    <li class="header">LOGS</li>
+  <!--  <li class="header">LOGS</li>
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/access"><i class="fa fa-book"></i>
         <span class="page">Access</span>
@@ -116,7 +110,7 @@
         <span class="page">Repos</span>
         <small class="label pull-right bg-green">AJAX</small>
       </router-link>
-    </li>
+    </li>-->
 
 
 

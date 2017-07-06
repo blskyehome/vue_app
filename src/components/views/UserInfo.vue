@@ -17,13 +17,14 @@
                   <small>{{user.email}}</small>
                 </a></h4>
             </div>
-            <p class="description text-center">
+         <!--   <p class="description text-center">
               "I like the way you work it
               <br> No diggity
               <br> I wanna bag it up"
-            </p></div>
+            </p>-->
+          </div>
           <hr>
-          <div class="text-center">
+          <!--<div class="text-center">
             <div class="row">
               <div class="col-md-3 col-md-offset-1">
                 <h5>12
@@ -44,7 +45,7 @@
                 </h5>
               </div>
             </div>
-          </div>
+          </div>-->
         </div>
         </div>
           <div class="col-lg-8  col-md-7">

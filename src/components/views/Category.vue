@@ -29,7 +29,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="col-md-12 col-sm-6 col-xs-12"  v-if="numFlag">
               <button class="btn  btn-info btn-block" @click="loadMore">loadMore</button>
             </div>
           </div>
@@ -106,7 +106,8 @@ export default {
       categoryForModify: null,
       categoryForDelete: null,
       categoryItem: {},
-      keyword: ''
+      keyword: '',
+      numFlag: false
     }
   },
   methods: {
@@ -125,7 +126,26 @@ export default {
             this.error = response.statusText
             return
           }
+          if (response.data.data.length >= 24) {
+            this.numFlag = true
+          }
+          if (response.data.data === 0) {
+            this.$toasted.success('已经加载完所有的链接', {
+              theme: 'bubble',
+              position: 'top-center',
+              duration: 2000
+            })
+          }
           this.categoryItem = response.data.data
+          if (this.categoryItem.length === 0) {
+            this.$toasted.success(
+              '<span class="fa fa-bell"></span><span>暂时没有内容~</span>',
+              {
+                theme: 'bubble',
+                position: 'top-center',
+                duration: 2000
+              })
+          }
         })
         .catch(error => {
           // Request failed.
@@ -202,7 +222,7 @@ export default {
         }
       })
         .then(response => {
-          this.$toasted.success('修改成功!', {
+          this.$toasted.success('<span class="fa fa-bell"></span>修改成功!', {
             theme: 'bubble',
             position: 'top-center',
             duration: 5000

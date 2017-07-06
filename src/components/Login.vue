@@ -9,14 +9,14 @@
 
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                <input class="form-control" name="user_name" placeholder="user_name" type="text" v-model="user_name">
+                <input class="form-control" name="user_name" placeholder="昵称/邮箱" type="text" v-model="user_name">
               </div>
 
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                <input class="form-control" name="password" placeholder="Password" type="password" v-model="password">
+                <input class="form-control" name="password" placeholder="密码" type="password" v-model="password">
               </div>
-              <button type="submit" v-bind:class="'btn btn-primary btn-lg ' + loading">Submit</button>
+              <button type="submit" v-bind:class="'btn btn-primary btn-lg btn-block ' + loading">登录</button>
             </form>
 
             <!-- errors -->
@@ -71,9 +71,9 @@ export default {
       })
       .catch(error => {
         this.$store.commit('TOGGLE_LOADING')
-        console.log(error)
+        console.log(error.response)
 
-        this.response = 'Server appears to be offline'
+        this.response = error.response.data.msg
         this.toggleLoading()
       })
     },
