@@ -57,7 +57,7 @@
     </li>
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/user/info">
-        <i class="fa fa-tasks"></i>
+        <i class="fa fa-user"></i>
         <span class="page">个人信息</span>
       </router-link>
     </li>
