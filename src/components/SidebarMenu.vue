@@ -15,7 +15,7 @@
     <li class="pageLink" v-on:click="toggleMenu">
       <router-link to="/link"><i class="fa fa-link"></i>
         <span class="page">全部</span>
-        <small class="label pull-right bg-green">AJAX</small>
+        <!--<small class="label pull-right bg-green">AJAX</small>-->
       </router-link>
     </li>
     <li class="treeview">

@@ -12,6 +12,11 @@
             <span class="input-group-addon"><i class="fa  fa-search"></i></span>
           </div>
         </div>
+        <div class="col-md-6 col-sm-4 col-xs-12">
+          <div class="input-group">
+            <button class="btn btn-info"   data-toggle="modal" data-target="#newLinkModel">新建</button>
+          </div>
+        </div>
         <hr>
 
         <!-- /.search form -->
@@ -123,6 +128,56 @@
         </div>
       </div>
 
+      <!-- New Link Modal -->
+      <div class="modal fade"
+           id="newLinkModel" tabindex="-1" role="dialog" aria-labelledby="modifyModelLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" >新建</h4>
+            </div>
+            <div class="model-body">
+              <div class="modal-body">
+
+                <div class="form-group">
+                  <label  class="control-label">链接:</label>
+                  <input type="text" class="form-control"  v-model="newLink.url">
+                </div>
+                <div class="form-group">
+                  <label class="control-label">标题:</label>
+                  <input type="text" class="form-control" v-model="newLink.title">
+                </div>
+                <div class="form-group"  v-if="categoryItem" >
+                  <label  class="control-label">分类:</label>
+                  <select class="form-control" v-model="newLink.category_id">
+                    <option  v-for="item in categoryItem" v-bind:value="item.id" >{{item.name}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label  class="control-label">是否公开:</label>
+                  <label class="radio-inline">
+                    <input type="radio" name="openness" value="1" v-model="newLink.openness"> 公开
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="openness"  value="2" v-model="newLink.openness" checked> 私有
+                  </label>
+
+                </div>
+                <div class="form-group">
+                  <label  class="control-label">备注:</label>
+                  <textarea class="form-control" rows="3" v-model="newLink.comment"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info " data-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-danger "  data-dismiss="modal" @click="newLinkPost">确定</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
   </div>
 </template>
@@ -143,7 +198,10 @@ export default {
       linkForDelete: null,
       categoryItem: null,
       keyword: '',
-      numFlag: false
+      numFlag: false,
+      newLink: {
+
+      }
     }
   },
   methods: {
@@ -309,6 +367,39 @@ export default {
           // Request failed.
           console.log('error', error)
           this.$toasted.error('修改失败!' + error.response.statusText, {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 5000
+          })
+//          this.error = error.response.statusText
+        })
+    },
+    newLinkPost () {
+      axios({
+        method: 'post',
+        url: config.serverURI + '/link',
+        data: {
+          token: localStorage.token,
+          url: this.newLink.url,
+          title: this.newLink.title,
+          openness: this.newLink.openness,
+          category_id: this.newLink.category_id,
+          comment: this.newLink.comment
+        }
+      })
+        .then(response => {
+          this.$toasted.success('添加成功!', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 5000
+          })
+          console.log(response)
+          this.response.unshift(this.newLink)
+        })
+        .catch(error => {
+          // Request failed.
+          console.log('error', error)
+          this.$toasted.error('添加失败!' + error.response.statusText, {
             theme: 'bubble',
             position: 'top-center',
             duration: 5000
